@@ -1,0 +1,55 @@
+<div class="quiz-container">
+  <div>
+    <label for="quiz-set">Select a role:</label>
+    <br><br>
+ <select
+  id="quiz-set"
+  #select
+  (change)="onSelectSet(select.value)"
+  [disabled]="loading"
+>
+  <option value="" disabled selected>Select a role</option>
+  <option
+    *ngFor="let set of quizSets"
+    [value]="set"
+    [disabled]="completedSets.includes(set)"
+  >
+    {{ set | titlecase }}
+  </option>
+</select>
+
+  </div>
+
+  <hr>
+
+  <div *ngIf="loading" class="spinner"></div>
+
+  <div *ngIf="!loading && selectedSet && !showResult" class="question-card">
+  <h2>Question {{ currentIndex + 1 }} / {{ questions.length }}</h2>
+  <p>{{ questions[currentIndex].question }}</p>
+
+  <ul class="options-list">
+    <li *ngFor="let option of questions[currentIndex].options">
+      <button
+        (click)="selectAnswer(option)"
+        [disabled]="selectedAnswer"
+        [class.selected]="selectedAnswer === option"
+        type="button"
+      >
+        {{ option }}
+      </button>
+    </li>
+  </ul>
+
+  <button class="next-button" (click)="nextQuestion()" [disabled]="!selectedAnswer">
+    Next
+  </button>
+</div>
+
+
+  <div *ngIf="!loading && showResult">
+    <h2>Quiz Complete!</h2>
+    <p>Your score: {{ score }} / {{ questions.length }}</p>
+    <button (click)="restartQuiz()">Restart Quiz</button>
+  </div>
+</div>

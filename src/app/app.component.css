@@ -1,0 +1,10 @@
+.selected {
+  background-color: #cce5ff;
+  font-weight: bold;
+}
+button {
+  margin: 5px;
+}
+select {
+  margin-bottom: 15px;
+}
